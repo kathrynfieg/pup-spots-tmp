@@ -13,6 +13,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import parkImage from "../src/assets/park2.png";
+import { watchEffect } from "vue";
 
 const auth = useFirebaseAuth();
 const user = useCurrentUser();
@@ -112,6 +113,24 @@ async function signOutOfFirebase() {
         console.error(error);
       });
 }
+
+const spotImages = ref<any>({});
+
+async function fetchRandomDogImage(spotId: string) {
+  try {
+    const response = await fetch("https://dog.ceo/api/breeds/image/random");
+    const data = await response.json();
+    spotImages.value[spotId] = data.message;
+  } catch (error) {
+    console.error("Error fetching random dog image:", error);
+  }
+}
+
+watchEffect(() => {
+  spotCollection.value.forEach((spot) => {
+    fetchRandomDogImage(spot.id);
+  });
+});
 </script>
 
 <template>
@@ -208,11 +227,11 @@ async function signOutOfFirebase() {
             border="1"
             elevation="4"
           >
-            <!-- <v-img
+            <v-img
+              v-if="spotImages[spot.id]"
+              :src="spotImages[spot.id]"
               height="100"
-              cover
-              src="https://images.unsplash.com/photo-1622050956578-94fd044a0ada?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            /> -->
+            />
             <template #title>
               <div
                 style="
