@@ -12,6 +12,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import parkImage from "../src/assets/park2.png";
 
 const auth = useFirebaseAuth();
 const user = useCurrentUser();
@@ -131,7 +132,7 @@ async function signOutOfFirebase() {
     <v-card
       class="mx-auto"
       color="surface-variant"
-      image="https://cdn.vuetifyjs.com/docs/images/cards/dark-beach.jpg"
+      :image="parkImage"
       subtitle="Visit Adelaide's best spots with your furry friends"
       height="200"
     >
