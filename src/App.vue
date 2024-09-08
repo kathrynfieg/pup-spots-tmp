@@ -127,7 +127,18 @@ async function signOutOfFirebase() {
       >
     </div>
     <br />
-    <h1>Pup Spots Adelaide</h1>
+    <!-- <h1>Pup Spots Adelaide</h1> -->
+    <v-card
+      class="mx-auto"
+      color="surface-variant"
+      image="https://cdn.vuetifyjs.com/docs/images/cards/dark-beach.jpg"
+      subtitle="Visit Adelaide's best spots with your furry friends"
+      height="200"
+    >
+      <template #title>
+        <h1>Pup Spots Adelaide</h1>
+      </template>
+    </v-card>
     <br />
     <div v-if="!user?.email">
       <h3>Sign In</h3>
@@ -172,8 +183,34 @@ async function signOutOfFirebase() {
     <hr />
     <br />
     <div style="display: flex; flex-direction: column; gap: 1rem">
-      <v-card v-for="spot in spotCollection" :key="spot.name">
-        <template #title>{{ spot.name }}</template>
+      <v-card
+        v-for="spot in spotCollection"
+        :key="spot.name"
+        theme="dark"
+        border="1"
+        elevation="4"
+      >
+        <!-- <v-img
+          height="100"
+          cover
+          src="https://images.unsplash.com/photo-1622050956578-94fd044a0ada?q=80&w=1752&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        /> -->
+        <template #title>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <div>{{ spot.name }}</div>
+            <v-icon
+              v-if="spot.favourite"
+              color="yellow-darken-2"
+              icon="mdi-star"
+            ></v-icon>
+          </div>
+        </template>
         <template #subtitle>Is Favourite: {{ spot.favourite }}</template>
         <template #text>
           Address: {{ spot.address }}
