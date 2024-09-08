@@ -211,13 +211,23 @@ async function signOutOfFirebase() {
             ></v-icon>
           </div>
         </template>
-        <template #subtitle>Is Favourite: {{ spot.favourite }}</template>
+        <template #subtitle> {{ spot.type }}</template>
+
         <template #text>
           Address: {{ spot.address }}
           <br />
-          Rating: {{ spot.rating }} / 5
-          <br />
-          Type: {{ spot.type }}
+          Rating:
+          <div style="display: flex; gap: 1rem; align-items: center">
+            <v-rating
+              hover
+              readonly
+              :length="5"
+              :size="16"
+              :model-value="spot.rating"
+              active-color="primary"
+            />
+            <div style="margin-top: 0.5rem">{{ spot.rating }} / 5</div>
+          </div>
         </template>
 
         <v-card-actions v-if="user?.email">
